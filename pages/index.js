@@ -1,30 +1,31 @@
-import { Inter } from "next/font/google";
-import Header from "@/components/Header";
-import Featured from "@/components/Featured";
-import { Product } from "@/models/Product";
-import { mongooseConnect } from "@/lib/mongoose";
-import NewProducts from "@/components/NewProducts";
+// index.js
 
-const inter = Inter({ subsets: ["latin"] });
+import { Inter } from 'next/font/google';
+import Header from '@/components/Header';
+import Featured from '@/components/Featured';
+import { Product } from '@/models/Product';
+import { mongooseConnect } from '@/lib/mongoose';
+import NewProducts from '@/components/NewProducts';
 
-export default function HomePage({featuredProduct, newProducts}) {
-  console.log({newProducts});
+const inter = Inter({ subsets: ['latin'] });
+
+export default function HomePage({ featuredProduct, newProducts }) {
+
   
   return (
     <div>
       <Header />
       <Featured product={featuredProduct} />
-      <NewProducts /> 
+      <NewProducts products={newProducts} /> 
     </div>
   );
 }
-
 
 export async function getServerSideProps() {
   const featuredProductId = '667ac46075193362a1272d6b';
   await mongooseConnect();
   const featuredProduct = await Product.findById(featuredProductId);
-  const newProducts = await Product.find({}, null, {sort:{'_id':-1}, limit:10});
+  const newProducts = await Product.find({}, null, {sort: { '_id': -1 }, limit: 10});
   
   return {
     props: {
@@ -33,4 +34,3 @@ export async function getServerSideProps() {
     },
   };
 }
-
