@@ -6,6 +6,7 @@ import Featured from '@/components/Featured';
 import { Product } from '@/models/Product';
 import { mongooseConnect } from '@/lib/mongoose';
 import NewProducts from '@/components/NewProducts';
+import { CartContext } from '@/components/CartContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
