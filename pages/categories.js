@@ -1,10 +1,13 @@
-import {mongooseConnect} from "@/lib/mongoose";
-import { Product } from '@/models/Product';
-import { Category } from '@/models/category' // Make sure to import Category model
-import ProductsGrid from '@/components/ProductsGrid';
-import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Header from "@/components/Header";
+import Center from "@/components/Center";
+import ProductsGrid from "@/components/ProductsGrid";
+import Title from "@/components/Title";
+import styled from "styled-components";
+import { mongooseConnect } from '@/lib/mongoose';
+import { Category } from '@/models/Category';
+import { Product } from '@/models/Product';
 
 const SearchInput = styled.input`
   width: 100%;
@@ -15,74 +18,55 @@ const SearchInput = styled.input`
   font-size: 1rem;
 `;
 
-const CategoryFilter = styled.select`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-`;
-
-export default function CategoriesPage({ products, categories }) {
+export default function CategoriesPage({ initialProducts }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [products, setProducts] = useState(initialProducts);
 
   useEffect(() => {
-    const fetchFilteredProducts = async () => {
-      const response = await axios.get('/api/products', {
-        params: { category: selectedCategory }
-      });
-      setFilteredProducts(response.data);
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('/api/products?category=667a67ded3ea5638eca65c4d'); 
+        // Use the provided Mobile category ID
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
     };
 
-    if (selectedCategory) {
-      fetchFilteredProducts();
-    } else {
-      setFilteredProducts(products);
-    }
-  }, [selectedCategory, products]);
+    fetchProducts();
+  }, []);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    const filtered = products.filter(product => 
-      product.title.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setFilteredProducts(filtered);
-  };
+  const filteredProducts = products.filter(product =>
+    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
-      <h1>All Products</h1>
-      <SearchInput 
-        type="text" 
-        placeholder="Search products..." 
-        value={searchTerm}
-        onChange={handleSearch}
-      />
-      <CategoryFilter 
-        value={selectedCategory} 
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
-        <option value="">All Categories</option>
-        {categories.map(category => (
-          <option key={category._id} value={category._id}>{category.name}</option>
-        ))}
-      </CategoryFilter>
-      <ProductsGrid products={filteredProducts} />
+      <Header />
+      <Center>
+        <Title>Mobile Products</Title>
+        
+  
+        <ProductsGrid products={filteredProducts} />
+
+        <Title>Laptops</Title>
+        <ProductsGrid products={filteredProducts} />
+        <Title>Headphones</Title>
+        
+      </Center>
     </>
   );
 }
 
 export async function getServerSideProps() {
   await mongooseConnect();
-  const products = await Product.find({}, null, { sort: { _id: -1 } }).populate('category');
-  const categories = await Category.find({});
+
+  const category = await Category.findById('667a67ded3ea5638eca65c4d').lean();
+  const products = await Product.find({ category: category._id }).lean();
+
   return {
     props: {
-      products: JSON.parse(JSON.stringify(products)),
-      categories: JSON.parse(JSON.stringify(categories))
+      initialProducts: JSON.parse(JSON.stringify(products)),
     },
   };
 }

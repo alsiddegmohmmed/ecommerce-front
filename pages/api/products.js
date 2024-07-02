@@ -1,32 +1,20 @@
-import { mongooseConnect } from "@/lib/mongoose";
-import { Product } from "@/models/Product";
-import { Category } from "@/models/category";
-import mongoose from "mongoose";
+import { Product } from '@/models/Product';
+import { mongooseConnect } from '@/lib/mongoose';
 
-export default async function handle(req, res) {
+export default async function handler(req, res) {
   await mongooseConnect();
-
   const { category } = req.query;
-  const filter = {};
 
+  let query = {};
   if (category) {
-    try {
-      const categoryDoc = await Category.findOne({ name: category });
-      if (categoryDoc) {
-        filter.category = categoryDoc._id;
-      } else {
-        // If category is not found, return empty result
-        return res.json([]);
-      }
-    } catch (error) {
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
+    query.category = category;
   }
 
   try {
-    const products = await Product.find(filter);
-    res.json(products);
+    const products = await Product.find(query).populate('category');
+    res.status(200).json(products);
+    console.log('Category:', category);
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Error fetching products' });
   }
 }
