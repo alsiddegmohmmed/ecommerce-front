@@ -20,7 +20,7 @@ const WhiteBox = styled(Link)`
   border-radius: 10px;
   img{
     max-width: 100%;
-    max-height: 80px;
+    max-height: 150px;
   }
 `;
 
