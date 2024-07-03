@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import Header from "@/components/Header";
 import Center from "@/components/Center";
+import { mongooseConnect } from "@/lib/mongoose";
+import { Product } from "@/models/Product";
 import ProductsGrid from "@/components/ProductsGrid";
 import Title from "@/components/Title";
 import styled from "styled-components";
@@ -15,23 +16,9 @@ const SearchInput = styled.input`
   font-size: 1rem;
 `;
 
-export default function ProductsPage() {
+export default function ProductsPage({ products }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('/api/products');
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
+  
   const filteredProducts = products.filter(product => 
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -51,4 +38,14 @@ export default function ProductsPage() {
       </Center>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  await mongooseConnect();
+  const products = await Product.find({}, null, { sort: { _id: -1 } });
+  return {
+    props: {
+      products: JSON.parse(JSON.stringify(products)),
+    },
+  };
 }
