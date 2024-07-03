@@ -28,44 +28,23 @@ export default function CategoriesPage({ initialProducts }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/categories?category=667a67ded3ea5638eca65c4d');
-        setProducts(response.data);
+        const [productsRes, laptopsRes, samsungRes, headphonesRes] = await Promise.all([
+          axios.get('/api/categories?category=667a67ded3ea5638eca65c4d'),
+          axios.get('/api/categories?category=667d08299b401379e1e98791'),
+          axios.get('/api/categories?category=667d080d9b401379e1e9878d'),
+          axios.get('/api/categories?category=667d081a9b401379e1e9878f')
+        ]);
+
+        setProducts(productsRes.data);
+        setLaptops(laptopsRes.data);
+        setSamsung(samsungRes.data);
+        setHeadphones(headphonesRes.data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
 
-    const fetchLaptops = async () => {
-      try {
-        const response = await axios.get('/api/categories?category=667d08299b401379e1e98791');
-        setLaptops(response.data);
-      } catch (error) {
-        console.error('Error fetching laptops:', error);
-      }
-    };
-
-    const fetchSamsung = async () => {
-      try {
-        const response = await axios.get('/api/categories?category=667d080d9b401379e1e9878d');
-        setSamsung(response.data);
-      } catch (error) {
-        console.error('Error fetching Samsung products:', error);
-      }
-    };
-
-    const fetchHeadphones = async () => {
-      try {
-        const response = await axios.get('/api/categories?category=667d081a9b401379e1e9878f');
-        setHeadphones(response.data);
-      } catch (error) {
-        console.error('Error fetching headphones:', error);
-      }
-    };
-
-    fetchLaptops();
     fetchProducts();
-    fetchSamsung();
-    fetchHeadphones();
   }, []);
 
   const filteredProducts = products.filter(product =>
