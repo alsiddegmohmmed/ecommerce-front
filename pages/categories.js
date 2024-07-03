@@ -69,10 +69,10 @@ export default function CategoriesPage({ initialProducts }) {
       <Center>
         <Title>IPhones & IPads</Title>
         <ProductsGrid products={filteredProducts} />
-        <Title>Android Mobiles</Title>
-        <ProductsGrid products={filteredSamsung} />
         <Title>Laptops</Title>
         <ProductsGrid products={filteredLaptops} />
+        <Title>Android Mobiles</Title>
+        <ProductsGrid products={filteredSamsung} />
         <Title>Headphones</Title>
         <ProductsGrid products={filteredHeadphones} />
       </Center>
