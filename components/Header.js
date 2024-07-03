@@ -7,6 +7,7 @@ import BarsIcon from "./icons/BarsIcon";
 
 const StyledHeader = styled.header`
   background-color: #222;
+  z-index: 1000; 
 `;
 
 const Logo = styled(Link)`
@@ -57,7 +58,7 @@ const NavButton = styled.button`
   color: white;
   cursor: pointer;
   position: relative;
-  z-index: 3;
+  z-index: 99;
   @media screen and (min-width: 768px) {
     display: none;
   }
