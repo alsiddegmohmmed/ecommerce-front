@@ -28,7 +28,7 @@ export default function CategoriesPage({ initialProducts }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products?category=667a67ded3ea5638eca65c4d'); 
+        const response = await axios.get('/api/categories?category=667a67ded3ea5638eca65c4d'); 
         // Use the provided Mobile category ID
         setProducts(response.data);
       } catch (error) {
@@ -38,7 +38,7 @@ export default function CategoriesPage({ initialProducts }) {
 
     const fetchLaptop = async () => {
       try {
-        const response = await axios.get('/api/products?category=667d08299b401379e1e98791'); 
+        const response = await axios.get('/api/categories?category=667d08299b401379e1e98791'); 
         // Use the provided Mobile category ID
         setLaptops(response.data);
       } catch (error) {
@@ -48,7 +48,7 @@ export default function CategoriesPage({ initialProducts }) {
     
     const fetchSamsung = async () => {
       try {
-        const response = await axios.get('/api/products?category=667d080d9b401379e1e9878d'); 
+        const response = await axios.get('/api/categories?category=667d080d9b401379e1e9878d'); 
         // Use the provided Mobile category ID
         setSamsung(response.data);
       } catch (error) {
@@ -58,7 +58,7 @@ export default function CategoriesPage({ initialProducts }) {
 
     const fetchHeadphoones= async () => {
       try {
-        const response = await axios.get('/api/products?category=667d081a9b401379e1e9878f'); 
+        const response = await axios.get('/api/categories?category=667d081a9b401379e1e9878f'); 
         // Use the provided Mobile category ID
         setHeadphones(response.data);
       } catch (error) {

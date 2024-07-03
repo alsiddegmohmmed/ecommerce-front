@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import {CartContextProvider} from "@/components/CartContext";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }) {
       <GlobalStyles />
       <CartContextProvider>
         <Component {...pageProps} />
+        <SpeedInsights />
       </CartContextProvider>
     </>
   );

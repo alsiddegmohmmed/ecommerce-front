@@ -19,6 +19,7 @@ export default function HomePage({ featuredProduct, newProducts }) {
       <Header />
       <Featured product={featuredProduct} />
       <NewProducts products={newProducts} /> 
+      <SpeedInsights />
     </div>
   );
 }
