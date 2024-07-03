@@ -62,8 +62,8 @@ export default function CategoriesPage({ initialProducts }) {
       }
     };
 
-    fetchProducts();
     fetchLaptops();
+    fetchProducts();
     fetchSamsung();
     fetchHeadphones();
   }, []);
