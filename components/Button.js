@@ -20,7 +20,7 @@ export const ButtonStyle = css`
   }
   ${props => props.block && css`
     display: block;
-    width: 100%;
+    // width: 100%;
   `}
   ${props => props.white && !props.outline && css`
     background-color: #fff;
