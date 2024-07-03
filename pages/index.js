@@ -7,6 +7,7 @@ import { Product } from '@/models/Product';
 import { mongooseConnect } from '@/lib/mongoose';
 import NewProducts from '@/components/NewProducts';
 import { CartContext } from '@/components/CartContext';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] });
 

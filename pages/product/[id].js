@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import CartIcon from "@/components/icons/CartIcon";
 import {useContext} from "react";
 import {CartContext} from "@/components/CartContext";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const ColWrapper = styled.div`
   display: grid;
@@ -31,6 +32,7 @@ const Price = styled.span`
 
 export default function ProductPage({product}) {
   const {addProduct} = useContext(CartContext);
+  
   return (
     <>
       <Header />
