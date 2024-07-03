@@ -1,6 +1,4 @@
 // pages/category/[id].js
-
-import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
