@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Center from "@/components/Center";
 
 export default function CategoryPage() {
     const router = useRouter();
@@ -24,7 +25,7 @@ export default function CategoryPage() {
     }, [id]);
 
     return (
-        <Layout>
+        <Center>
             {category && <h1>{category.name}</h1>}
             <div className="products-grid">
                 {products.map(product => (
@@ -36,6 +37,6 @@ export default function CategoryPage() {
                     </div>
                 ))}
             </div>
-        </Layout>
+        </Center>
     );
 }
