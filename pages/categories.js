@@ -9,14 +9,7 @@ import { mongooseConnect } from '@/lib/mongoose';
 import { Category } from '@/models/Category';
 import { Product } from '@/models/Product';
 
-const SearchInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-`;
+
 
 export default function CategoriesPage({ initialProducts }) {
   const [searchTerm, setSearchTerm] = useState('');

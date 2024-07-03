@@ -62,7 +62,10 @@ export default function ProductBox({_id,title,description,price,images}) {
   const {addProduct} = useContext(CartContext);
   const url = '/product/'+_id;
   return (
-    <ProductWrapper>
+    <div data-aos="fade-up">
+
+   
+    <ProductWrapper  >
       <WhiteBox href={url}>
         <div>
           <img src={images?.[0]} alt=""/>
@@ -80,6 +83,10 @@ export default function ProductBox({_id,title,description,price,images}) {
           </Button>
         </PriceRow>
       </ProductInfoBox>
+      
+
     </ProductWrapper>
+
+    </div>
   );
 }
