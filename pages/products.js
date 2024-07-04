@@ -33,6 +33,8 @@ export default function ProductsPage({ products }) {
   useEffect(() => {
     AOS.init({
       duration: 1000, // Animation duration
+      once: true, // Whether animation should happen only once - while scrolling down
+      offset: 200, // Offset (in px) from the original trigger point
     });
     setLoading(false); // Set loading to false once the content is loaded
   }, []);

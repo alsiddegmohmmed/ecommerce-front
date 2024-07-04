@@ -62,12 +62,12 @@ const Price = styled.div`
   color: #333;
 `;
 
-export default function ProductBox({ _id, title, description, price, images }) {
+export default function ProductBox({ _id, title, description, price, images, index }) {
   const { addProduct } = useContext(CartContext);
   const url = '/product/' + _id;
 
   return (
-    <ProductWrapper>
+    <ProductWrapper data-aos="fade-up" data-aos-delay={`${index * 100}`}>
       <WhiteBox href={url}>
         <img src={images?.[0]} alt={title} />
       </WhiteBox>
