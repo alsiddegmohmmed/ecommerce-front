@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { mongooseConnect } from '@/lib/mongoose';
 import { Product } from '@/models/Product';
 import { Category } from '@/models/Category';
+import Loading from '@/components/Loading';
 
 const SearchInput = styled.input`
   width: 100%;
@@ -24,6 +25,8 @@ export default function CategoriesPage({ initialProducts }) {
   const [laptops, setLaptops] = useState([]);
   const [headphones, setHeadphones] = useState([]);
   const [samsung, setSamsung] = useState([]);
+  const [loading, setLoading] = useState([]); 
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,10 +45,15 @@ export default function CategoriesPage({ initialProducts }) {
       } catch (error) {
         console.error('Error fetching products:', error);
       }
+      
     };
-
+    setLoading(false);
     fetchProducts();
   }, []);
+
+  if (loading) {
+    return <Loading />
+  }
 
   const filteredProducts = products.filter(product =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())

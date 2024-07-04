@@ -8,6 +8,7 @@ import Title from "@/components/Title";
 import styled from "styled-components";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Loading from "@/components/Loading"; // Import Loading component
 
 const SearchInput = styled.input`
   width: 100%;
@@ -27,16 +28,22 @@ const SearchInput = styled.input`
 
 export default function ProductsPage({ products }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     AOS.init({
       duration: 1000, // Animation duration
     });
+    setLoading(false); // Set loading to false once the content is loaded
   }, []);
 
   const filteredProducts = products.filter(product => 
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (loading) {
+    return <Loading />; // Show loading spinner while loading
+  }
 
   return (
     <>

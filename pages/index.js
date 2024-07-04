@@ -8,11 +8,23 @@ import { mongooseConnect } from '@/lib/mongoose';
 import NewProducts from '@/components/NewProducts';
 import { CartContext } from '@/components/CartContext';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Loading from '@/components/Loading';
+import { useState, useEffect } from 'react';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function HomePage({ featuredProduct, newProducts }) {
 
+  const [loading, setLoading] = useState(true); 
+
+  useEffect(() => {
+    setLoading(false); // Set loading to false once the content is loaded
+  }, []);
+
+  if (loading) {
+    return <Loading />; // Show loading spinner while loading
+  }
   
   return (
     <div>

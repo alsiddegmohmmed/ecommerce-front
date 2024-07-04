@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import {CartContextProvider} from "@/components/CartContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+
 const GlobalStyles = createGlobalStyle`
   body {
     padding: 0;
