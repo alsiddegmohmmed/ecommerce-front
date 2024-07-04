@@ -9,6 +9,7 @@ import Table from "@/components/Table";
 import Input from "@/components/Input";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Loading from "@/components/Loading";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -101,6 +102,7 @@ export default function CartPage() {
   const [streetAddress, setStreetAddress] = useState('');
   const [country, setCountry] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState([]); 
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -112,7 +114,10 @@ export default function CartPage() {
     } else {
       setProducts([]);
     }
+    setLoading(false)
   }, [cartProducts]);
+
+ 
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -123,6 +128,11 @@ export default function CartPage() {
       clearCart();
     }
   }, []);
+
+  if (loading) {
+    return <Loading />
+  }
+
 
   function moreOfThisProduct(id) {
     addProduct(id);
