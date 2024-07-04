@@ -143,17 +143,21 @@ export default function CartPage() {
   }
 
   async function goToPayment() {
-    const response = await axios.post('/api/checkout', {
-      name,
-      email,
-      city,
-      postalCode,
-      streetAddress,
-      country,
-      cartProducts,
-    });
-    if (response.data.url) {
-      window.location = response.data.url;
+    try {
+      const response = await axios.post('/api/checkout', {
+        name,
+        email,
+        city,
+        postalCode,
+        streetAddress,
+        country,
+        cartProducts,
+      });
+      if (response.data.url) {
+        window.location = response.data.url;
+      }
+    } catch (error) {
+      console.error('Error during payment redirection:', error);
     }
   }
 
