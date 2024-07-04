@@ -18,6 +18,11 @@ export const ButtonStyle = css`
     height: 16px;
     margin-right: 5px;
   }
+  &:hover {
+    background-color: white; 
+    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
   ${props => props.block && css`
     display: block;
     // width: 100%;

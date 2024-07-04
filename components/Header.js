@@ -4,7 +4,6 @@ import Center from "@/components/Center";
 import { useState, useContext } from "react";
 import { CartContext } from "@/components/CartContext";
 import BarsIcon from "./icons/BarsIcon";
-import { motion } from "framer-motion";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -17,12 +16,36 @@ const Logo = styled(Link)`
   text-decoration: none;
   position: relative;
   z-index: 1100; /* Ensure logo is above nav */
+
+  &:hover {
+    color: white; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 0;
+`;
+
+const StyledNav = styled.nav`
+  ${(props) => (props.mobileNavActive ? `display: block;` : `display: none;`)}
+  gap: 15px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 70px 20px 20px;
+  background-color: #222;
+  z-index: 1050; /* Ensure nav is above content but below logo and button */
+  @media screen and (min-width: 768px) {
+    display: flex;
+    position: static;
+    padding: 0;
+    z-index: auto; /* Reset z-index for desktop view */
+  }
 `;
 
 const NavLink = styled(Link)`
@@ -33,6 +56,10 @@ const NavLink = styled(Link)`
   @media screen and (min-width: 768px) {
     padding: 0;
   }
+  &:hover {
+    color: white; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const NavButton = styled.button`
@@ -42,52 +69,35 @@ const NavButton = styled.button`
   border: 0;
   color: white;
   cursor: pointer;
+  
+  
   position: relative;
   z-index: 1100; /* Ensure button is above nav */
   @media screen and (min-width: 768px) {
     display: none;
   }
-`;
 
-const variants = {
-  open: { opacity: 1, x: 0 },
-  closed: { opacity: 0, x: "-100%" },
-};
+ 
+`;
 
 export default function Header() {
   const { cartProducts } = useContext(CartContext);
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [mobileNavActive, setMobileNavActive] = useState(false);
   return (
     <StyledHeader>
       <Center>
         <Wrapper>
           <Logo href={'/'}>Ecommerce</Logo>
-          <NavButton onClick={() => setIsOpen(isOpen => !isOpen)}>
-            <BarsIcon />
-          </NavButton>
-          <motion.nav
-            initial="closed"
-            animate={isOpen ? "open" : "closed"}
-            variants={variants}
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100vh",
-              backgroundColor: "#222",
-              padding: "70px 20px 20px",
-              zIndex: 1050,
-              display: isOpen ? "block" : "none"
-            }}
-          >
+          <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={'/'}>Home</NavLink>
             <NavLink href={'/products'}>All products</NavLink>
             <NavLink href={'/categories'}>Categories</NavLink>
             {/* <NavLink href={'/account'}>Account</NavLink> */}
             <NavLink href={'/cart'}>Cart ({cartProducts.length})</NavLink>
-          </motion.nav>
+          </StyledNav>
+          <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
+            <BarsIcon />
+          </NavButton>
         </Wrapper>
       </Center>
     </StyledHeader>
