@@ -91,7 +91,7 @@ export default function CategoriesPage({ initialProducts }) {
 export async function getServerSideProps() {
   await mongooseConnect();
 
-  const category = await Category.findById('667a67ded3ea5638eca65c4d').lean();
+  const category = await Category.findById('669bad3428d8700f653600df').lean();
   const products = await Product.find({ category: category._id }).lean();
 
   return {
